@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # vending:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: vending
+  #   ports:
+  #     - '8080:8080'
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - surrealdb
+  #     - minio
+  #   networks:
+  #     - vending_network
+
+  surrealdb:
+    image: surrealdb/surrealdb:latest
+    container_name: surrealdb
+    ports:
+      - '8000:8000'
+    volumes:
+      - ${HOME}/vending/surrealdb:/mydata
+    command: start --log trace --user root --pass root file:/mydata/mydatabase.db
+    networks:
+      - vending_network
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    ports:
+      - '9009:9000'
+      - '9090:9090'
+    env_file:
+      - .env
+    volumes:
+      - ${HOME}/vending/minio:/data
+    command: server /data --console-address ":9090"
+    networks:
+      - vending_network
+
+networks:
+  vending_network:
+    name: vending_network

@@ -1,0 +1,81 @@
+package db
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/surrealdb/surrealdb.go"
+)
+
+func Mock(db *surrealdb.DB) {
+
+	// Create Products
+	productData := []Product{
+		{ProductID: 1, ProductName: "Coke", Price: 1.5, Stock: 50, Picture: "https://i.imgur.com/0QhZ0ZB.png"},
+		{ProductID: 2, ProductName: "Pepsi", Price: 1.5, Stock: 50, Picture: "https://i.imgur.com/0QhZ0ZB.png"},
+		{ProductID: 3, ProductName: "Water", Price: 1.0, Stock: 100, Picture: "https://i.imgur.com/0QhZ0ZB.png"},
+	}
+
+	for _, p := range productData {
+		_, err := db.Query(fmt.Sprintf(`
+			INSERT INTO product {id: "product:%d", product_name: "%s", price: %.2f, stock: %d, picture: "%s"}
+			`,
+			p.ProductID, p.ProductName, p.Price, p.Stock, p.Picture),
+			nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// Create Coins and Banknotes
+	denominationData := []CoinAndBanknote{
+		{DenominationID: 1, DenominationValue: 1, Stock: 100},
+		{DenominationID: 2, DenominationValue: 5, Stock: 100},
+		{DenominationID: 3, DenominationValue: 10, Stock: 100},
+		{DenominationID: 4, DenominationValue: 20, Stock: 50},
+		{DenominationID: 5, DenominationValue: 50, Stock: 50},
+		{DenominationID: 6, DenominationValue: 100, Stock: 50},
+		{DenominationID: 7, DenominationValue: 500, Stock: 10},
+		{DenominationID: 8, DenominationValue: 1000, Stock: 5},
+	}
+
+	for _, d := range denominationData {
+		_, err := db.Query(fmt.Sprintf(`INSERT INTO denomination {id: "denomination:%d", denomination_value: %.2f, stock: %d}`, d.DenominationID, d.DenominationValue, d.Stock), nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// Create Transactions
+	transactionData := []Transaction{
+		{TransactionID: 1, ProductID: 1, Quantity: 1, TotalPrice: 1.5, TransactionTime: "2021-09-01 12:00:00"},
+		{TransactionID: 2, ProductID: 2, Quantity: 1, TotalPrice: 1.5, TransactionTime: "2021-09-01 12:00:00"},
+		{TransactionID: 3, ProductID: 3, Quantity: 1, TotalPrice: 1.0, TransactionTime: "2021-09-01 12:00:00"},
+		{TransactionID: 4, ProductID: 1, Quantity: 1, TotalPrice: 1.5, TransactionTime: "2021-09-01 12:00:00"},
+		{TransactionID: 5, ProductID: 2, Quantity: 1, TotalPrice: 1.5, TransactionTime: "2021-09-01 12:00:00"},
+	}
+
+	for _, t := range transactionData {
+		_, err := db.Query(fmt.Sprintf(`INSERT INTO transaction {id: "transaction:%d", product_id: product:%d, quantity: %d, total_price: %.2f, transaction_time: "%s"}`, t.TransactionID, t.ProductID, t.Quantity, t.TotalPrice, t.TransactionTime), nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	paymentData := []Payment{
+		{PaymentID: 1, TransactionID: 1, DenominationID: 1, Quantity: 2, TotalValue: 2.0},
+		{PaymentID: 2, TransactionID: 2, DenominationID: 2, Quantity: 1, TotalValue: 5.0},
+		{PaymentID: 3, TransactionID: 3, DenominationID: 3, Quantity: 1, TotalValue: 10.0},
+		{PaymentID: 4, TransactionID: 4, DenominationID: 4, Quantity: 1, TotalValue: 20.0},
+		{PaymentID: 5, TransactionID: 5, DenominationID: 5, Quantity: 1, TotalValue: 50.0},
+	}
+
+	for _, p := range paymentData {
+		_, err := db.Query(fmt.Sprintf(`INSERT INTO payment {id: "payment:%d", transaction_id: "transaction:%d", denomination_id: "denomination:%d", quantity: %d, total_value: %.2f}`, p.PaymentID, p.TransactionID, p.DenominationID, p.Quantity, p.TotalValue), nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	log.Println("🟢 Mocked database")
+
+}
