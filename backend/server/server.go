@@ -33,12 +33,11 @@ func StartServer(cfg *config.Config, dbClient *surrealdb.DB) {
 	})
 
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", cfg.NEXT_PUBLIC_SERVER_IP + ":3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", cfg.NextPublicServerIP + ":3000"},
 		AllowCredentials: true,
 	})
 
 	http.ListenAndServe(":8080", corsMiddleware.Handler(r))
 
 	// r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
-
 }

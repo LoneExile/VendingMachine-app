@@ -8,7 +8,6 @@ import (
 )
 
 func Mock(db *surrealdb.DB) {
-
 	// Create Products
 	productData := []Product{
 		{ProductID: 1, ProductName: "Water1", Price: 1.5, Stock: 50, Picture: "https://illustoon.com/photo/11612.png"},
@@ -86,5 +85,4 @@ func Mock(db *surrealdb.DB) {
 		}
 	}
 	log.Println("🟢 Mocked database")
-
 }
