@@ -11,9 +11,18 @@ func Mock(db *surrealdb.DB) {
 
 	// Create Products
 	productData := []Product{
-		{ProductID: 1, ProductName: "Coke", Price: 1.5, Stock: 50, Picture: "https://i.imgur.com/0QhZ0ZB.png"},
-		{ProductID: 2, ProductName: "Pepsi", Price: 1.5, Stock: 50, Picture: "https://i.imgur.com/0QhZ0ZB.png"},
-		{ProductID: 3, ProductName: "Water", Price: 1.0, Stock: 100, Picture: "https://i.imgur.com/0QhZ0ZB.png"},
+		{ProductID: 1, ProductName: "Water1", Price: 1.5, Stock: 50, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 2, ProductName: "Water2", Price: 1.5, Stock: 50, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 3, ProductName: "Water3", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 4, ProductName: "Water4", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 5, ProductName: "Water5", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 6, ProductName: "Water6", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 7, ProductName: "Water7", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 8, ProductName: "Water8", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 9, ProductName: "Water9", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 10, ProductName: "Water10", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 11, ProductName: "Water11", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 12, ProductName: "Water12", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
 	}
 
 	for _, p := range productData {
