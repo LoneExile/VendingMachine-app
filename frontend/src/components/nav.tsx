@@ -16,10 +16,9 @@ interface ItemsProps {
 
 function getTotal() {
   const $cart: Cart = JSON.parse(useStore(cartStorage).products)
-  console.log('table', $cart.items)
 
   let total = 0
-  $cart.items.forEach((item) => {
+  $cart.items?.forEach((item) => {
     total += item.quantity
   })
   return total

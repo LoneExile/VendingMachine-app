@@ -1,8 +1,8 @@
 import Footer from '@/components/footer'
-import Connent from '@/components/content'
 import dynamic from 'next/dynamic'
 
 const Nav = dynamic(() => import('@/components/nav'), {ssr: false})
+const Connent = dynamic(() => import('@/components/content'), {ssr: false})
 
 const status = 1
 

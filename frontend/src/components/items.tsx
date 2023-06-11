@@ -2,7 +2,9 @@
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 
-const ItemsTable = dynamic(() => import('./itemsTable'), {ssr: false})
+const ItemsTable = dynamic(() => import('@/components/itemsTable'), {
+  ssr: false,
+})
 
 function Items() {
   return (

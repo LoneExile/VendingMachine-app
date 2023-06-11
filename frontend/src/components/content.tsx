@@ -3,8 +3,18 @@ import Link from 'next/link'
 import {useStore} from '@nanostores/react'
 import {cartStorage} from '@/utils/stores'
 
+function getData() {
+  const local = useStore(cartStorage)
+  // const $cart: Cart = JSON.parse(useStore(cartStorage).products)
+  if (local) {
+    return JSON.parse(local.products)
+  } else {
+    return {items: [], total: 0}
+  }
+}
+
 function Card({product}: {product: Product}) {
-  const $cart: Cart = JSON.parse(useStore(cartStorage).products)
+  const $cart: Cart = getData()
   if (!$cart.items) {
     cartStorage.setKey('products', JSON.stringify({items: [], total: 0}))
   }
@@ -64,6 +74,8 @@ export default function Connent({products}: ProductsResponse) {
     cartStorage.setKey('products', JSON.stringify({items: [], total: 0}))
   }
 
+  const $cart = getData()
+
   return (
     <>
       <div className="flex flex-wrap justify-center">
@@ -72,13 +84,25 @@ export default function Connent({products}: ProductsResponse) {
         ))}
       </div>
       <div className="flex justify-between m-4">
-        <button className="btn btn-primary" onClick={resetStores}>
-          Reset
-        </button>
+        <div className="flex justify-start">
+          {$cart.items?.length > 0 ? (
+            <button className="btn btn-primary" onClick={resetStores}>
+              Reset
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
 
-        <Link href="/checkout">
-          <button className="btn btn-primary">Next</button>
-        </Link>
+        <div className="flex justify-start">
+          {$cart.items?.length > 0 ? (
+            <Link href="/checkout">
+              <button className="btn btn-primary">Next</button>
+            </Link>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </>
   )

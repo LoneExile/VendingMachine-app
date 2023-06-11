@@ -5,7 +5,6 @@ interface ListItemProps {
   data: CartItem
 }
 function ListItem({data}: ListItemProps) {
-  console.log('list', data)
   return (
     <tr>
       <td>
@@ -32,14 +31,11 @@ function ListItem({data}: ListItemProps) {
 
 function getData() {
   const $cart: Cart = JSON.parse(useStore(cartStorage).products)
-  console.log('table', $cart.items)
-
   return $cart
 }
 
 function ItemsTable() {
   const $cart = getData()
-  console.log('table', $cart.items)
 
   const sumItems = () => {
     let total = 0
