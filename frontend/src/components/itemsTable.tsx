@@ -39,7 +39,7 @@ function ItemsTable() {
 
   const sumItems = () => {
     let total = 0
-    $cart.items.forEach((item) => {
+    $cart?.items?.forEach((item) => {
       total += item.quantity
     })
     return total

@@ -71,7 +71,8 @@ function Card({product}: {product: Product}) {
 }
 export default function Connent({products}: ProductsResponse) {
   const resetStores = () => {
-    cartStorage.setKey('products', JSON.stringify({items: [], total: 0}))
+    cartStorage.setKey('products', JSON.stringify([]))
+    cartStorage.setKey('pocket', JSON.stringify([]))
   }
 
   const $cart = getData()

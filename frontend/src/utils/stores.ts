@@ -1,9 +1,11 @@
 import {persistentMap} from '@nanostores/persistent'
 
-export type CartStorage = {
+export type Storage = {
   products: string
+  pocket: string
 }
 
-export const cartStorage = persistentMap<CartStorage>('cart:', {
+export const cartStorage = persistentMap<Storage>('cart:', {
   products: JSON.stringify([]),
+  pocket: JSON.stringify([]),
 })
