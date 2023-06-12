@@ -30,6 +30,7 @@ func main() {
 		log.Println("🔴 Error initializing database client:", err)
 		return
 	}
+	db.Mock()
 
 	server.StartServer(cfg, dbClient)
 }

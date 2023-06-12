@@ -22,6 +22,7 @@ type CoinAndBanknote struct {
 	DenominationID    int       `json:"denomination_id" surrealdb:"pk"`
 	DenominationValue float64   `json:"denomination_value"`
 	Stock             int       `json:"stock"`
+	Typed             string    `json:"typed"`
 	Payments          []Payment `json:"payments" surrealdb:"fk=DenominationID"`
 }
 

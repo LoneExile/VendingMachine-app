@@ -22,3 +22,11 @@ func (api *ginAPI) GetProducts() (interface{}, error) {
 	}
 	return result, nil
 }
+
+func (api *ginAPI) GetDenomination() (interface{}, error) {
+	result, err := api.dbClient.GetByTableName("denomination")
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}

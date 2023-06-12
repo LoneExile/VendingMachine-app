@@ -6,7 +6,7 @@ run:
 linters:
   enable:
     - asciicheck
-    - depguard
+    # - depguard
     - exportloopref
     - godot
     - gofmt
@@ -29,7 +29,7 @@ linters:
     - whitespace
   disable:
     - gofumpt
-    # - depguard
+    - depguard
     - goerr113
     - errcheck
     - funlen

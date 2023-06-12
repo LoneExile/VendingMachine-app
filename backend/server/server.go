@@ -31,6 +31,16 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 			"products": result,
 		})
 	})
+	// GetDenomination
+	r.GET("/denomination", func(c *gin.Context) {
+		result, err := apiInstance.GetDenomination()
+		if err != nil {
+			panic(err)
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"denomination": result,
+		})
+	})
 
 	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000", cfg.NextPublicServerIP + ":3000"},

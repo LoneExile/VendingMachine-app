@@ -10,18 +10,18 @@ func (dbClient *dbClient) Mock() {
 
 	// Create Products
 	productData := []Product{
-		{ProductID: 1, ProductName: "Water1", Price: 1.5, Stock: 50, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 2, ProductName: "Water2", Price: 1.5, Stock: 50, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 3, ProductName: "Water3", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 4, ProductName: "Water4", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 5, ProductName: "Water5", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 6, ProductName: "Water6", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 7, ProductName: "Water7", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 8, ProductName: "Water8", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 9, ProductName: "Water9", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 10, ProductName: "Water10", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 11, ProductName: "Water11", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
-		{ProductID: 12, ProductName: "Water12", Price: 1.0, Stock: 100, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 1, ProductName: "Water1", Price: 1, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 2, ProductName: "Water2", Price: 2, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 3, ProductName: "Water3", Price: 3, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 4, ProductName: "Water4", Price: 4, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 5, ProductName: "Water5", Price: 5, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 6, ProductName: "Water6", Price: 6, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 7, ProductName: "Water7", Price: 7, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 8, ProductName: "Water8", Price: 8, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 9, ProductName: "Water9", Price: 9, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 10, ProductName: "Water10", Price: 10, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 11, ProductName: "Water11", Price: 11, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
+		{ProductID: 12, ProductName: "Water12", Price: 12, Stock: 10, Picture: "https://illustoon.com/photo/11612.png"},
 	}
 
 	for _, p := range productData {
@@ -37,18 +37,20 @@ func (dbClient *dbClient) Mock() {
 
 	// Create Coins and Banknotes
 	denominationData := []CoinAndBanknote{
-		{DenominationID: 1, DenominationValue: 1, Stock: 100},
-		{DenominationID: 2, DenominationValue: 5, Stock: 100},
-		{DenominationID: 3, DenominationValue: 10, Stock: 100},
-		{DenominationID: 4, DenominationValue: 20, Stock: 50},
-		{DenominationID: 5, DenominationValue: 50, Stock: 50},
-		{DenominationID: 6, DenominationValue: 100, Stock: 50},
-		{DenominationID: 7, DenominationValue: 500, Stock: 10},
-		{DenominationID: 8, DenominationValue: 1000, Stock: 5},
+		{DenominationID: 1, DenominationValue: 1, Stock: 100, Typed: "coin"},
+		{DenominationID: 2, DenominationValue: 5, Stock: 100, Typed: "coin"},
+		{DenominationID: 3, DenominationValue: 10, Stock: 100, Typed: "coin"},
+		{DenominationID: 4, DenominationValue: 20, Stock: 50, Typed: "banknote"},
+		{DenominationID: 5, DenominationValue: 50, Stock: 50, Typed: "banknote"},
+		{DenominationID: 6, DenominationValue: 100, Stock: 50, Typed: "banknote"},
+		{DenominationID: 7, DenominationValue: 500, Stock: 10, Typed: "banknote"},
+		{DenominationID: 8, DenominationValue: 1000, Stock: 5, Typed: "banknote"},
 	}
 
 	for _, d := range denominationData {
-		_, err := db.Query(fmt.Sprintf(`INSERT INTO denomination {id: "denomination:%d", denomination_value: %.2f, stock: %d}`, d.DenominationID, d.DenominationValue, d.Stock), nil)
+		_, err := db.Query(fmt.Sprintf(`INSERT INTO denomination {id: "denomination:%d", denomination_value: %.2f, stock: %d, typed: "%s"}`,
+			d.DenominationID, d.DenominationValue, d.Stock, d.Typed),
+			nil)
 		if err != nil {
 			log.Fatal(err)
 		}
