@@ -38,7 +38,7 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 			panic(err)
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"denomination": result,
+			"denominations": result,
 		})
 	})
 
