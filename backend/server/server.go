@@ -4,13 +4,13 @@ import (
 	"net/http"
 	"vending/api"
 	"vending/config"
+	"vending/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/cors"
-	"github.com/surrealdb/surrealdb.go"
 )
 
-func StartServer(cfg *config.Config, dbClient *surrealdb.DB) {
+func StartServer(cfg *config.Config, dbClient db.DBClient) {
 	r := gin.Default()
 	apiInstance, err := api.NewAPI(cfg, dbClient)
 	if err != nil {

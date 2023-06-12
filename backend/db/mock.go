@@ -3,11 +3,11 @@ package db
 import (
 	"fmt"
 	"log"
-
-	"github.com/surrealdb/surrealdb.go"
 )
 
-func Mock(db *surrealdb.DB) {
+func (dbClient *dbClient) Mock() {
+	db := dbClient.db
+
 	// Create Products
 	productData := []Product{
 		{ProductID: 1, ProductName: "Water1", Price: 1.5, Stock: 50, Picture: "https://illustoon.com/photo/11612.png"},

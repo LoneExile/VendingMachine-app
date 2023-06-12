@@ -24,13 +24,12 @@ func main() {
 		return
 	}
 
-	dbClient, err := db.Init(cfg)
+	db := db.NewDB()
+	dbClient, err := db.InitDB(cfg)
 	if err != nil {
 		log.Println("🔴 Error initializing database client:", err)
 		return
 	}
-
-	db.Mock(dbClient)
 
 	server.StartServer(cfg, dbClient)
 }
