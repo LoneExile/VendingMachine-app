@@ -10,7 +10,6 @@ type ginAPI struct {
 }
 
 func NewAPI(cfg *config.Config, dbClient db.DBClient) (*ginAPI, error) {
-
 	return &ginAPI{
 		dbClient: dbClient,
 	}, nil
