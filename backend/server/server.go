@@ -42,6 +42,24 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 		})
 	})
 
+	r.POST("/checkout", func(c *gin.Context) {
+		var requestBody struct {
+			Cart   db.Cart   `json:"cart"`
+			Pocket db.Pocket `json:"pocket"`
+		}
+		if err := c.BindJSON(&requestBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		result, err := apiInstance.Checkout(requestBody.Cart, requestBody.Pocket)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"message": result})
+	})
+
 	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000", cfg.NextPublicServerIP + ":3000"},
 		AllowCredentials: true,

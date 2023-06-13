@@ -1,20 +1,20 @@
 version: '3.8'
 
 services:
-  # vending:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: vending
-  #   ports:
-  #     - '8080:8080'
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - surrealdb
-  #     - minio
-  #   networks:
-  #     - vending_network
+  vending:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vending
+    ports:
+      - '8080:8080'
+    env_file:
+      - .env
+    depends_on:
+      - surrealdb
+      - minio
+    networks:
+      - vending_network
 
   surrealdb:
     image: surrealdb/surrealdb:latest

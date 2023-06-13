@@ -33,3 +33,32 @@ type Payment struct {
 	Quantity       int     `json:"quantity"`
 	TotalValue     float64 `json:"total_value"`
 }
+
+// ---------------
+type CartItem struct {
+	ID       string  `json:"id"`
+	Products string  `json:"products"`
+	Quantity int     `json:"quantity"`
+	Price    float64 `json:"price"`
+	Total    float64 `json:"total"`
+	Picture  string  `json:"picture"`
+}
+
+type Cart struct {
+	Items []CartItem `json:"items"`
+	Total float64    `json:"total"`
+}
+
+type PocketItem struct {
+	ID                string  `json:"id"`
+	DenominationValue string  `json:"denomination_value"`
+	Stock             int     `json:"stock"`
+	Typed             string  `json:"typed"`
+	Quantity          int     `json:"quantity"`
+	Total             float64 `json:"total"`
+}
+
+type Pocket struct {
+	Items   []PocketItem `json:"items"`
+	Balance float64      `json:"balance"`
+}

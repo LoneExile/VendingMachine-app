@@ -30,3 +30,12 @@ func (api *ginAPI) GetDenomination() (interface{}, error) {
 	}
 	return result, nil
 }
+
+func (api *ginAPI) Checkout(cart db.Cart, pocket db.Pocket) (interface{}, error) {
+	result, err := api.dbClient.PostCheckout(cart, pocket)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
