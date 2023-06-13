@@ -251,7 +251,7 @@ func (dbClient *dbClient) PostCheckout(cart Cart, pocket Pocket) (interface{}, e
 		}
 
 		returnMessage["status"] = "success"
-		returnMessage["message"] = "Successfull transaction"
+		returnMessage["message"] = "Successful transaction"
 		returnMessage["change"] = changeDenominations.Items
 		log.Println("🟢 last:", changeDenominations.Items)
 		return returnMessage, nil

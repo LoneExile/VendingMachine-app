@@ -34,7 +34,6 @@ type Payment struct {
 	TotalValue     float64 `json:"total_value"`
 }
 
-// ---------------
 type CartItem struct {
 	ID       string  `json:"id"`
 	Products string  `json:"products"`
