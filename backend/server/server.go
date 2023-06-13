@@ -42,7 +42,7 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 		})
 	})
 
-	r.POST("/checkout", func(c *gin.Context) {
+	r.POST("/billing", func(c *gin.Context) {
 		var requestBody struct {
 			Cart   db.Cart   `json:"cart"`
 			Pocket db.Pocket `json:"pocket"`
