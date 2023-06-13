@@ -78,7 +78,7 @@ function ListItem({pocketItem, setPocketItem}: ListItemProps) {
 async function sendCartAndPocket(cart: Cart, pocket: Pocket) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_IP + ':8080/checkout',
+      process.env.NEXT_PUBLIC_SERVER_IP_HOST + '/checkout',
       {
         method: 'POST',
         headers: {

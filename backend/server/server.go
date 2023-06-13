@@ -61,7 +61,7 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 	})
 
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", cfg.NextPublicServerIP + ":3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", cfg.NextPublicServerIP + ":3000", "https://bpi.voidbox.dev", "http://bpi.voidbox.dev"},
 		AllowCredentials: true,
 	})
 
