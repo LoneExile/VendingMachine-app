@@ -21,6 +21,7 @@ type Config struct {
 	MinIOEndpoint    string
 
 	NextPublicServerIP string
+	ServerIP           string
 }
 
 func LoadConfig() *Config {
@@ -36,7 +37,8 @@ func LoadConfig() *Config {
 		// MinIOUseSSL:        false, // Change to "true" if you are using https
 		// MinIOBucketName:    "vending",
 		// MinIOEndpoint:      "localhost:9009",
-		// NextPublicServerIP: "http://localhost",
+		// NextPublicServerIP: "http://localhost:8080",
+		// ServerIP:           "http://localhost:3000",
 
 		// -------------------------------------------------------
 
@@ -52,6 +54,7 @@ func LoadConfig() *Config {
 		MinIOBucketName:    os.Getenv("MinIOBucketName"),
 		MinIOEndpoint:      os.Getenv("MinIOEndpoint"),
 		NextPublicServerIP: os.Getenv("NEXT_PUBLIC_SERVER_IP"),
+		ServerIP:           os.Getenv("SERVER_IP"),
 	}
 }
 

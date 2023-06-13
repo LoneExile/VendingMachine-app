@@ -7,12 +7,9 @@ const Payment = dynamic(() => import('@/components/payment'), {ssr: false})
 const status = 3
 
 async function getData() {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_IP + ':8080/denomination',
-    {
-      cache: 'no-store',
-    }
-  )
+  const res = await fetch(process.env.NEXT_PUBLIC_SERVER_IP + '/denomination', {
+    cache: 'no-store',
+  })
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }

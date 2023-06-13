@@ -42,7 +42,7 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 		})
 	})
 
-	r.POST("/checkout", func(c *gin.Context) {
+	r.POST("/billing", func(c *gin.Context) {
 		var requestBody struct {
 			Cart   db.Cart   `json:"cart"`
 			Pocket db.Pocket `json:"pocket"`
@@ -61,7 +61,7 @@ func StartServer(cfg *config.Config, dbClient db.DBClient) {
 	})
 
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", cfg.NextPublicServerIP + ":3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", cfg.ServerIP},
 		AllowCredentials: true,
 	})
 

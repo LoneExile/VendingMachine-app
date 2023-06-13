@@ -76,36 +76,25 @@ function ListItem({pocketItem, setPocketItem}: ListItemProps) {
 }
 
 async function sendCartAndPocket(cart: Cart, pocket: Pocket) {
-  try {
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_IP + ':8080/checkout',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({cart, pocket}),
-        credentials: 'include',
-      }
-    )
+  const response = await fetch(process.env.NEXT_PUBLIC_SERVER_IP + '/billing', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({cart, pocket}),
+    credentials: 'include',
+  })
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(
-        'There was a problem with the fetch operation: ' + error.message
-      )
-    }
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
   }
+
+  const data = await response.json()
+
+  return data
 }
 
-export default function Payment({denominations}: DenominationsResponse) {
+export default async function Payment({denominations}: DenominationsResponse) {
   const local = useStore(cartStorage)
   const cart: Cart = JSON.parse(local.products)
   const denominationsList: Denomination[] = JSON.parse(local.pocket)
