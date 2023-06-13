@@ -14,17 +14,28 @@ interface ItemsProps {
   // children: React.ReactNode
 }
 
-function getTotal() {
-  const $cart: Cart = JSON.parse(useStore(cartStorage).products)
+// function useTotal() {
+//   const local = useStore(cartStorage).products
+//   // const local = cartStorage.get().products
+//   const $cart: Cart = JSON.parse(local)
+
+//   let total = 0
+//   $cart.items?.forEach((item) => {
+//     total += item.quantity
+//   })
+//   return total
+// }
+
+export default function Nav({status, location}: Props) {
+  const local = useStore(cartStorage).products
+  // const local = cartStorage.get().products
+  const $cart: Cart = JSON.parse(local)
 
   let total = 0
   $cart.items?.forEach((item) => {
     total += item.quantity
   })
-  return total
-}
 
-export default function Nav({status, location}: Props) {
   const ItemsNav: React.FC<ItemsProps> = ({status}) => {
     if (status === 1) {
       return (
@@ -45,9 +56,7 @@ export default function Nav({status, location}: Props) {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span className="badge badge-sm indicator-item">
-                {getTotal()}
-              </span>
+              <span className="badge badge-sm indicator-item">{total}</span>
             </div>
           </label>
           <div

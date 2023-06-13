@@ -2,10 +2,11 @@
 import Link from 'next/link'
 import {useStore} from '@nanostores/react'
 import {cartStorage} from '@/utils/stores'
+import Image from 'next/image'
 
-function getData() {
+function useData() {
   const local = useStore(cartStorage)
-  // const $cart: Cart = JSON.parse(useStore(cartStorage).products)
+  // const local = cartStorage.get()
   if (local) {
     return JSON.parse(local.products)
   } else {
@@ -14,7 +15,7 @@ function getData() {
 }
 
 function Card({product}: {product: Product}) {
-  const $cart: Cart = getData()
+  const $cart: Cart = useData()
   if (!$cart.items) {
     cartStorage.setKey('products', JSON.stringify({items: [], total: 0}))
   }
@@ -37,6 +38,7 @@ function Card({product}: {product: Product}) {
 
     if (!found) {
       updatedItems.push({
+        id: product.id,
         products: product.product_name,
         quantity: 1,
         price: parseFloat(product.price),
@@ -56,10 +58,12 @@ function Card({product}: {product: Product}) {
   return (
     <div className="card card-compact w-52 m-4 bg-base-100 shadow-xl">
       <figure>
-        <img src={product.picture} alt="item" />
+        {/* <Image src={product.picture} alt="item" /> */}
+        <Image src={'/water.webp'} alt="item" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{product.product_name}</h2>
+        <h2 className="">{product.price} THB</h2>
         <div className="card-actions justify-end">
           <button className="btn btn-primary" onClick={add}>
             Add
@@ -75,7 +79,7 @@ export default function Connent({products}: ProductsResponse) {
     cartStorage.setKey('pocket', JSON.stringify([]))
   }
 
-  const $cart = getData()
+  const $cart = useData()
 
   return (
     <>

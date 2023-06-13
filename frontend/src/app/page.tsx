@@ -7,7 +7,13 @@ const Connent = dynamic(() => import('@/components/content'), {ssr: false})
 const status = 1
 
 async function getData() {
-  const res = await fetch('http://localhost:8080/products', {cache: 'no-store'})
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_SERVER_IP + ':8080/products',
+    {
+      cache: 'no-store',
+      credentials: 'include',
+    }
+  )
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }

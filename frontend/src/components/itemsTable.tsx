@@ -1,5 +1,6 @@
 import {useStore} from '@nanostores/react'
 import {cartStorage} from '@/utils/stores'
+import Image from 'next/image'
 
 interface ListItemProps {
   data: CartItem
@@ -11,10 +12,8 @@ function ListItem({data}: ListItemProps) {
         <div className="flex items-center space-x-3">
           <div className="avatar">
             <div className="mask mask-squircle w-12 h-12">
-              <img
-                src="https://illustoon.com/photo/11612.png"
-                alt="Avatar Tailwind CSS Component"
-              />
+              {/*  <Image src="https://illustoon.com/photo/11612.png" alt="item" />  */}
+              <Image src={'/water.webp'} alt="item" />
             </div>
           </div>
           <div>
@@ -30,7 +29,8 @@ function ListItem({data}: ListItemProps) {
 }
 
 function getData() {
-  const $cart: Cart = JSON.parse(useStore(cartStorage).products)
+  const local = cartStorage.get().products
+  const $cart: Cart = JSON.parse(local)
   return $cart
 }
 

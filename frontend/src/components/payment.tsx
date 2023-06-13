@@ -3,6 +3,7 @@ import Link from 'next/link'
 import {useState} from 'react'
 import {useStore} from '@nanostores/react'
 import {cartStorage} from '@/utils/stores'
+import {useRouter} from 'next/navigation'
 
 type ListItemProps = {
   pocketItem: PocketItem
@@ -42,11 +43,12 @@ function ListItem({pocketItem, setPocketItem}: ListItemProps) {
     <tr>
       <td>
         <div className="flex items-center space-x-3">
-          <div className="avatar">
-            <div className="mask mask-squircle w-12 h-12">🪙</div>
-          </div>
+          <div className="avatar"></div>
           <div>
-            <div className="font-bold">{pocketItem.denomination_value} THB</div>
+            <div className="font-bold ml-12 ">
+              {pocketItem.typed === 'coin' ? '🪙' : '💵'}{' '}
+              {pocketItem.denomination_value} THB
+            </div>
           </div>
         </div>
       </td>
@@ -73,11 +75,41 @@ function ListItem({pocketItem, setPocketItem}: ListItemProps) {
   )
 }
 
+async function sendCartAndPocket(cart: Cart, pocket: Pocket) {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_SERVER_IP + ':8080/checkout',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({cart, pocket}),
+        credentials: 'include',
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        'There was a problem with the fetch operation: ' + error.message
+      )
+    }
+  }
+}
+
 export default function Payment({denominations}: DenominationsResponse) {
   const local = useStore(cartStorage)
   const cart: Cart = JSON.parse(local.products)
   const denominationsList: Denomination[] = JSON.parse(local.pocket)
-  if (denominationsList.length === 0 || denominationsList === undefined) {
+  if (denominationsList.length === 0) {
     const pocketItem: PocketItem[] = denominations.map((item) => {
       return {
         ...item,
@@ -99,7 +131,6 @@ export default function Payment({denominations}: DenominationsResponse) {
   }
 
   function updatePocket(pocket: Pocket) {
-    // const pocket: Pocket = getPocket()
     const pocketItem: PocketItem[] = pocket.items
     let total = 0
     pocketItem.forEach((item) => {
@@ -118,6 +149,19 @@ export default function Payment({denominations}: DenominationsResponse) {
     return change
   }
 
+  async function checkout() {
+    const local = cartStorage.get()
+    const pocket: Pocket = JSON.parse(local.pocket)
+    const cart: Cart = JSON.parse(local.products)
+    const data = await sendCartAndPocket(cart, pocket)
+    return data
+  }
+  const router = useRouter()
+  async function handlePayment() {
+    const billsData = await checkout()
+    cartStorage.setKey('bills', JSON.stringify(billsData))
+    router.push('/payment/bill')
+  }
   return (
     <>
       <div className="collapse bg-base-200 mb-2">
@@ -139,8 +183,8 @@ export default function Payment({denominations}: DenominationsResponse) {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                {$pocket.items.map((item, index) => (
+              <tbody className="mx-auto">
+                {$pocket.items?.map((item, index) => (
                   <ListItem
                     key={index}
                     pocketItem={item}
@@ -170,7 +214,7 @@ export default function Payment({denominations}: DenominationsResponse) {
           </div>
           <div className="flex justify-between">
             <div>My Pocket</div>
-            <div>{$pocket.balance} $</div>
+            <div>{$pocket.balance} THB</div>
           </div>
           <div className="flex justify-between">
             <div>Change</div>
@@ -179,7 +223,7 @@ export default function Payment({denominations}: DenominationsResponse) {
                 calculateChange() < 0 ? 'text-red-500' : 'text-green-500'
               }
             >
-              {calculateChange()} $
+              {calculateChange()} THB
             </div>
           </div>
         </div>
@@ -193,28 +237,7 @@ export default function Payment({denominations}: DenominationsResponse) {
         <button
           className="btn btn-primary"
           disabled={calculateChange() < 0 ? true : false}
-          onClick={() => {
-            const pocket = getPocket()
-            const pocketItem = pocket.items
-            const newPocketItem = pocketItem.map((item) => {
-              return {
-                ...item,
-                quantity: 0,
-                total: 0,
-              }
-            })
-            const newPocket: Pocket = {
-              items: newPocketItem,
-              balance: 0,
-            }
-            cartStorage.setKey('pocket', JSON.stringify(newPocket))
-
-            const newCart: Cart = {
-              items: [],
-              total: 0,
-            }
-            cartStorage.setKey('products', JSON.stringify(newCart))
-          }}
+          onClick={handlePayment}
         >
           Pay
         </button>
