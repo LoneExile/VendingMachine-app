@@ -1,6 +1,6 @@
 # Vending Machine App
 
-You can view a live demo at [https://bpi.voidbox.dev/](https://bpi.voidbox.dev/)
+Me trying to learn Go and Next.js with Surrealdb.
 
 ## Description
 
